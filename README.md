@@ -7,3 +7,4 @@ Code of **Firebase for Web** workshop
 
 ## Branches
 - step1: just layout stuff
+- step2: firebase hosting
