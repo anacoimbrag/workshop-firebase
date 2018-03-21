@@ -7,4 +7,5 @@ Code of **Firebase for Web** workshop
 
 ## Branches
 - step1: just layout stuff
-- step2: firebase hosting
+- step2: firebase [hosting](https://firebase.google.com/docs/hosting/quickstart)
+- step3: firebase [auth](https://firebase.google.com/docs/auth/web/start)
