@@ -3,7 +3,7 @@ var config = {
     authDomain: "workshop-firebase-web.firebaseapp.com",
     databaseURL: "https://workshop-firebase-web.firebaseio.com",
     projectId: "workshop-firebase-web",
-    storageBucket: "",
+    storageBucket: "gs://workshop-firebase-web.appspot.com/",
     messagingSenderId: "523334017959"
 };
 firebase.initializeApp(config);
@@ -108,6 +108,7 @@ $(document).ready(function() {
 
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data().description}`);
+            download(doc.id, true);
             var label = $("<label id=pending-" + doc.id + "></label>");
 
             label.appendTo("#pending");
@@ -137,6 +138,7 @@ $(document).ready(function() {
             $("#completed").html("<p>Nenhuma tarefa concluída</p>");
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data().description}`);
+            download(doc.id, false);
             var label = $("<label id=" + doc.id + "></label><br/>");
 
             label.appendTo("#completed");
@@ -153,7 +155,6 @@ $(document).ready(function() {
 
 
 function addTask(task) {
-    console.log(firebase.auth().currentUser);
     db.collection("tasks").add({
         description: task,
         pending: true,
@@ -161,6 +162,8 @@ function addTask(task) {
     })
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
+        if ($("#task_file")[0].files)
+            updload($("#task_file")[0].files[0], docRef.id);
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -213,10 +216,43 @@ messaging.getToken()
 messaging.onTokenRefresh(function() {
     messaging.getToken()
     .then(function(refreshedToken) {
-      console.log('Token refreshed.');
-      console.log(refreshedToken);
+        console.log('Token refreshed.');
+        console.log(refreshedToken);
     })
     .catch(function(err) {
-      console.log('Unable to retrieve refreshed token ', err);
+        console.log('Unable to retrieve refreshed token ', err);
     });
-  });
+}).catch(function(err) {
+    console.log('Unable to retrieve refreshed token ', err);
+});
+
+// Storage
+
+var storage = firebase.storage();
+var storageRef = storage.ref();
+
+function updload(file, id) {
+    var ref = storageRef.child(id + '.jpg');
+    ref.put(file).then(function(snapshot) {
+        console.log('Uploaded: ' + file.name);
+    });
+}
+
+function download(id, pending) {
+    var ref = storage.ref(id + '.jpg');
+
+    ref.getDownloadURL().then(function(url) {
+        var image = $("<img />");
+        image.attr("src", url);
+        image.attr("width", "60px");
+        image.attr("style", "margin-left: 20px");
+        image.addClass("rounded");
+        if (pending)
+            image.appendTo("#pending-" + id);
+        else 
+            image.appendTo("#" + id);
+
+      }).catch(function(error) {
+        // console.log(error);
+      });
+}
