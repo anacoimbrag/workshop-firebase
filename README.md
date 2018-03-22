@@ -10,3 +10,4 @@ Code of **Firebase for Web** workshop
 - step2: firebase [hosting](https://firebase.google.com/docs/hosting/quickstart)
 - step3: firebase [auth](https://firebase.google.com/docs/auth/web/start)
 - step4: [cloud firestore](https://firebase.google.com/docs/firestore/quickstart)
+- step5: [Cloud messaging](https://firebase.google.com/docs/cloud-messaging/)
