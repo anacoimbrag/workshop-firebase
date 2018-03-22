@@ -9,3 +9,4 @@ Code of **Firebase for Web** workshop
 - step1: just layout stuff
 - step2: firebase [hosting](https://firebase.google.com/docs/hosting/quickstart)
 - step3: firebase [auth](https://firebase.google.com/docs/auth/web/start)
+- step4: [cloud firestore](https://firebase.google.com/docs/firestore/quickstart)
