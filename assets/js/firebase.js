@@ -109,7 +109,7 @@ $(document).ready(function() {
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data().description}`);
             download(doc.id, true);
-            var label = $("<label id=pending-" + doc.id + "></label>");
+            var label = $("<label id=pending-" + doc.id + "></label><br/>");
 
             label.appendTo("#pending");
             var input = $('<input type="checkbox">');
@@ -157,8 +157,7 @@ $(document).ready(function() {
 function addTask(task) {
     db.collection("tasks").add({
         description: task,
-        pending: true,
-        user: currentUser.uid
+        pending: true
     })
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
