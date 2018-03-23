@@ -227,10 +227,9 @@ messaging.onTokenRefresh(function() {
 
 // Storage
 
-var storage = firebase.storage();
-var storageRef = storage.ref();
-
 function updload(file, id) {
+    var storage = firebase.storage();
+    var storageRef = storage.ref();
     var ref = storageRef.child(id + '.jpg');
     ref.put(file).then(function(snapshot) {
         console.log('Uploaded: ' + file.name);
@@ -238,6 +237,7 @@ function updload(file, id) {
 }
 
 function download(id, pending) {
+    var storage = firebase.storage();
     var ref = storage.ref(id + '.jpg');
 
     ref.getDownloadURL().then(function(url) {
